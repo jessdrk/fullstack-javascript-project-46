@@ -29,18 +29,20 @@ program
     const keys2 = Object.keys(obj2);
     const generalKeys = _.union(keys1, keys2);
     const sortedKeys = _.sortBy(generalKeys);
-    let result = '';
-    const diff = sortedKeys.map((key) => {
+    const cb = (acc, key) => {
+      let newAcc;
       if (obj1[key] === obj2[key]) {
-        result = `${result}    ${key}: ${obj1[key]}\n`;
+        newAcc = `${acc}    ${key}: ${obj1[key]}\n`;
       } else if (!Object.hasOwn(obj2, key)) {
-        result = `${result}  - ${key}: ${obj1[key]}\n`;
+        newAcc = `${acc}  - ${key}: ${obj1[key]}\n`;
       } else if (!Object.hasOwn(obj1, key)) {
-        result = `${result}  + ${key}: ${obj2[key]}\n`;
+        newAcc = `${acc}  + ${key}: ${obj2[key]}\n`;
       } else {
-        result = `${result}  - ${key}: ${obj1[key]}\n  + ${key}: ${obj2[key]}\n`;
+        newAcc = `${acc}  - ${key}: ${obj1[key]}\n  + ${key}: ${obj2[key]}\n`;
       }
-    });
+      return newAcc;
+    };
+    let result = sortedKeys.reduce(cb, '');
     result = `{\n${result}}`;
     console.log(result);
   });
