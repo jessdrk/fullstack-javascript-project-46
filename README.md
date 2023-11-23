@@ -4,5 +4,8 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6754ad6f72addbb95932/test_coverage)](https://codeclimate.com/github/jessdrk/fullstack-javascript-project-46/test_coverage)
 ![example workflow](https://github.com/jessdrk/fullstack-javascript-project-46/actions/workflows/nodejs.yml/badge.svg)
 
-### Example
+### Example difference generator (JSON)
 [![asciicast](https://asciinema.org/a/622019.svg)](https://asciinema.org/a/622019)
+
+### Example difference generator (YAML/YML)
+[![asciicast](https://asciinema.org/a/622750.svg)](https://asciinema.org/a/622750)

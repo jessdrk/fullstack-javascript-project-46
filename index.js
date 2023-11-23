@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
+import parsingData from './parsers.js';
 
 const getPath = (filepath) => {
   const currentPath = process.cwd();
@@ -10,7 +11,10 @@ const getPath = (filepath) => {
   return path.resolve(currentPath, filepath);
 };
 
-const readFile = (file) => JSON.parse(fs.readFileSync(getPath(file), { encoding: 'utf-8' }));
+const readFile = (file) => {
+  const read = fs.readFileSync(getPath(file), { encoding: 'utf-8' });
+  return parsingData(read, file);
+};
 
 const func = (filepath1, filepath2) => {
   const obj1 = readFile(filepath1);
