@@ -1,4 +1,4 @@
-import func from '../index.js';
+import generateDifference from '../src/index.js';
 
 test('gendiff', () => {
   const result = `{
@@ -45,10 +45,10 @@ test('gendiff', () => {
         fee: 100500
     }
 }`;
-  expect(func('__fixtures__/file1.json', '__fixtures__/file2.json')).toEqual(result);
-  expect(func('/__fixtures__/file1.json', '/__fixtures__/file2.json')).toEqual(result);
-  expect(func('__fixtures__/file1.yml', '__fixtures__/file2.yml')).toEqual(result);
-  expect(func('/__fixtures__/file1.yml', '/__fixtures__/file2.yml')).toEqual(result);
-  expect(func('__fixtures__/file1.yaml', '__fixtures__/file2.yaml')).toEqual(result);
-  expect(func('/__fixtures__/file1.yaml', '/__fixtures__/file2.yaml')).toEqual(result);
+  expect(generateDifference('__fixtures__/file1.json', '__fixtures__/file2.json')).toEqual(result);
+  expect(generateDifference('/__fixtures__/file1.json', '/__fixtures__/file2.json')).toEqual(result);
+  expect(generateDifference('__fixtures__/file1.yml', '__fixtures__/file2.yml')).toEqual(result);
+  expect(generateDifference('/__fixtures__/file1.yml', '/__fixtures__/file2.yml')).toEqual(result);
+  expect(generateDifference('__fixtures__/file1.yaml', '__fixtures__/file2.yaml')).toEqual(result);
+  expect(generateDifference('/__fixtures__/file1.yaml', '/__fixtures__/file2.yaml')).toEqual(result);
 });

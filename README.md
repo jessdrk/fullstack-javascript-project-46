@@ -9,3 +9,6 @@
 
 ### Example difference generator (YAML/YML)
 [![asciicast](https://asciinema.org/a/622750.svg)](https://asciinema.org/a/622750)
+
+### Example difference generator (nested structure)
+[![asciicast](https://asciinema.org/a/623945.svg)](https://asciinema.org/a/623945)

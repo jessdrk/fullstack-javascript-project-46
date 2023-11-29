@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import func from '../index.js';
+import generateDifference from '../src/index.js';
 
 program
   .name('gendiff')
@@ -9,9 +9,9 @@ program
   .version('1.0.0')
   .argument('<filepath1>')
   .argument('<filepath2>')
-  .option('-f, --format <type>', 'output format')
-  .action((filepath1, filepath2) => {
-    console.log(func(filepath1, filepath2));
+  .option('-f, --format <type>', 'output format', 'stylish')
+  .action((filepath1, filepath2, options) => {
+    console.log(generateDifference(filepath1, filepath2, options.format));
   });
 
 program.parse();
