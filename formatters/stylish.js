@@ -1,45 +1,44 @@
 const stylish = (tree) => {
   const iter = (node, depth) => {
     const replacer = ' '.repeat(4 * depth - 2);
-    const cb = (acc, item) => {
-      let newAcc;
-      if (Object.hasOwn(item, 'children')) {
-        newAcc = `${replacer}  ${item.name}: {\n${iter(item.children, depth + 1)}${replacer}  }\n`;
-        return `${acc}${newAcc}`;
-      }
-      if (item.status === 'deleted') {
-        if (item.type === 'nested') {
-          newAcc = `${replacer}- ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n`;
-          return `${acc}${newAcc}`;
+    const result = node.reduce((acc, item) => {
+      const newAcc = (() => {
+        if (Object.hasOwn(item, 'children')) {
+          return `${replacer}  ${item.name}: {\n${iter(item.children, depth + 1)}${replacer}  }\n`;
         }
-        newAcc = `${replacer}- ${item.name}: ${item.value}\n`;
-      }
-      if (item.status === 'added') {
-        if (item.type === 'nested') {
-          newAcc = `${replacer}+ ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n`;
-          return `${acc}${newAcc}`;
+        if (item.status === 'deleted') {
+          if (item.type === 'nested') {
+            return `${replacer}- ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n`;
+          }
+          return `${replacer}- ${item.name}: ${item.value}\n`;
         }
-        newAcc = `${replacer}+ ${item.name}: ${item.value}\n`;
-      }
-      if (item.status === 'changed') {
-        if (item.oldType === 'nested' || item.newType === 'nested') {
-          newAcc = `${replacer}- ${item.name}: {\n${iter(item.oldValue, depth + 1)}${replacer}  }\n${replacer}+ ${item.name}: ${item.newValue}\n`;
-          return `${acc}${newAcc}`;
+        if (item.status === 'added') {
+          if (item.type === 'nested') {
+            return `${replacer}+ ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n`;
+          }
+          return `${replacer}+ ${item.name}: ${item.value}\n`;
         }
-        newAcc = `${replacer}- ${item.name}: ${item.oldValue}\n${replacer}+ ${item.name}: ${item.newValue}\n`;
-      }
-      if (item.status === 'unchanged') {
-        if (item.type === 'nested') {
-          newAcc = `${replacer}  ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n`;
-          return `${acc}${newAcc}`;
+        if (item.status === 'changed') {
+          if (item.oldType === 'nested' || item.newType === 'nested') {
+            return `${replacer}- ${item.name}: {\n${iter(item.oldValue, depth + 1)}${replacer}  }\n${replacer}+ ${item.name}: ${item.newValue}\n`;
+          }
+          return `${replacer}- ${item.name}: ${item.oldValue}\n${replacer}+ ${item.name}: ${item.newValue}\n`;
         }
-        newAcc = `${replacer}  ${item.name}: ${item.value}\n`;
-      }
+        if (item.status === 'unchanged') {
+          if (item.type === 'nested') {
+            return `${replacer}  ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n`;
+          }
+          return `${replacer}  ${item.name}: ${item.value}\n`;
+        }
+        return '';
+      })();
+
       return `${acc}${newAcc}`;
-    };
-    const result = node.reduce(cb, '');
+    }, '');
+
     return result;
   };
+
   return `{\n${iter(tree, 1)}}`;
 };
 

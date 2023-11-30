@@ -31,7 +31,6 @@ const generateDifference = (filepath1, filepath2, format = 'stylish') => {
       const value1 = tree1[key];
       const value2 = tree2[key];
       const arrayOfObjects = [];
-      let newAcc;
       if (Object.hasOwn(tree1, key) && Object.hasOwn(tree2, key)) {
         if (_.isObject(value1) && _.isObject(value2)) {
           const obj = {
@@ -63,8 +62,7 @@ const generateDifference = (filepath1, filepath2, format = 'stylish') => {
           }
           arrayOfObjects.push(obj);
         }
-        newAcc = [...acc, ...arrayOfObjects];
-        return newAcc;
+        return [...acc, ...arrayOfObjects];
       }
 
       if (Object.hasOwn(tree1, key)) {
@@ -92,17 +90,16 @@ const generateDifference = (filepath1, filepath2, format = 'stylish') => {
         }
         arrayOfObjects.push(obj);
       }
-      newAcc = [...acc, ...arrayOfObjects];
-      return newAcc;
+      return [...acc, ...arrayOfObjects];
     };
 
     const result = sortedKeys.reduce(cb, []);
     return result;
   };
 
-  let diff = createAST(obj1, obj2);
-  diff = chooseFormat(diff, format);
-  return diff;
+  const diff = createAST(obj1, obj2);
+  const formatDiff = chooseFormat(diff, format);
+  return formatDiff;
 };
 
 export default generateDifference;
