@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
 import parsingData from './parsers.js';
-import formater from './stylish.js';
+import chooseFormat from '../formatters/index.js';
 
 const getPath = (filepath) => {
   const currentPath = process.cwd();
@@ -101,9 +101,7 @@ const generateDifference = (filepath1, filepath2, format = 'stylish') => {
   };
 
   let diff = createAST(obj1, obj2);
-  if (format === 'stylish') {
-    diff = formater(diff);
-  }
+  diff = chooseFormat(diff, format);
   return diff;
 };
 

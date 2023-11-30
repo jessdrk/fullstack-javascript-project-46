@@ -1,6 +1,6 @@
-import generateDifference from '../src/index.js';
+import generateDifference from '../src/genDiff.js';
 
-test('gendiff', () => {
+test('stylish', () => {
   const result = `{
     common: {
       + follow: false
@@ -51,4 +51,25 @@ test('gendiff', () => {
   expect(generateDifference('/__fixtures__/file1.yml', '/__fixtures__/file2.yml')).toEqual(result);
   expect(generateDifference('__fixtures__/file1.yaml', '__fixtures__/file2.yaml')).toEqual(result);
   expect(generateDifference('/__fixtures__/file1.yaml', '/__fixtures__/file2.yaml')).toEqual(result);
+});
+
+test('plain', () => {
+  const result = `Property 'common.follow' was added with value: false
+Property 'common.setting2' was removed
+Property 'common.setting3' was updated. From true to null
+Property 'common.setting4' was added with value: 'blah blah'
+Property 'common.setting5' was added with value: [complex value]
+Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+Property 'common.setting6.ops' was added with value: 'vops'
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group1.nest' was updated. From [complex value] to 'str'
+Property 'group2' was removed
+Property 'group3' was added with value: [complex value]`;
+
+  expect(generateDifference('__fixtures__/file1.json', '__fixtures__/file2.json', 'plain')).toEqual(result);
+  expect(generateDifference('/__fixtures__/file1.json', '/__fixtures__/file2.json', 'plain')).toEqual(result);
+  expect(generateDifference('__fixtures__/file1.yml', '__fixtures__/file2.yml', 'plain')).toEqual(result);
+  expect(generateDifference('/__fixtures__/file1.yml', '/__fixtures__/file2.yml', 'plain')).toEqual(result);
+  expect(generateDifference('__fixtures__/file1.yaml', '__fixtures__/file2.yaml', 'plain')).toEqual(result);
+  expect(generateDifference('/__fixtures__/file1.yaml', '/__fixtures__/file2.yaml', 'plain')).toEqual(result);
 });

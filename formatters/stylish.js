@@ -1,4 +1,4 @@
-const formater = (tree) => {
+const stylish = (tree) => {
   const iter = (node, depth) => {
     const replacer = ' '.repeat(4 * depth - 2);
     const cb = (acc, item) => {
@@ -43,4 +43,4 @@ const formater = (tree) => {
   return `{\n${iter(tree, 1)}}`;
 };
 
-export default formater;
+export default stylish;
