@@ -15,3 +15,6 @@
 
 ### Example difference generator (format plain)
 [![asciicast](https://asciinema.org/a/624194.svg)](https://asciinema.org/a/624194)
+
+### Example difference generator (format json)
+[![asciicast](https://asciinema.org/a/624232.svg)](https://asciinema.org/a/624232)
