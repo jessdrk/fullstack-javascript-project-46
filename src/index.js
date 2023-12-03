@@ -22,7 +22,6 @@ const generateDifference = (filepath1, filepath2, format = 'stylish') => {
     const cb = (acc, key) => {
       const value1 = tree1[key];
       const value2 = tree2[key];
-      const arrayOfObjects = [];
       if (Object.hasOwn(tree1, key) && Object.hasOwn(tree2, key)) {
         if (_.isObject(value1) && _.isObject(value2)) {
           const obj = {
@@ -31,58 +30,47 @@ const generateDifference = (filepath1, filepath2, format = 'stylish') => {
             status: 'unchanged',
             children: createAST(value1, value2),
           };
-          arrayOfObjects.push(obj);
-        } else if (value1 === value2) {
+          return [...acc, obj];
+        } if (value1 === value2) {
           const obj = {
             name: key,
             type: 'leaf',
             status: 'unchanged',
             value: value1,
           };
-          arrayOfObjects.push(obj);
-        } else {
-          const obj = {
-            name: key,
-            status: 'changed',
-            oldType: _.isObject(value1) ? 'nested' : 'leaf',
-            newType: _.isObject(value2) ? 'nested' : 'leaf',
-            oldValue: _.isObject(value1) ? createAST(value1, {}, true) : value1,
-            newValue: _.isObject(value2) ? createAST({}, value2, true) : value2,
-          };
-          if (hasParents === true) {
-            obj.status = 'unchanged';
-          }
-          arrayOfObjects.push(obj);
+          return [...acc, obj];
         }
-        return [...acc, ...arrayOfObjects];
+        const obj = {
+          name: key,
+          status: hasParents ? 'unchanged' : 'changed',
+          oldType: _.isObject(value1) ? 'nested' : 'leaf',
+          newType: _.isObject(value2) ? 'nested' : 'leaf',
+          oldValue: _.isObject(value1) ? createAST(value1, {}, true) : value1,
+          newValue: _.isObject(value2) ? createAST({}, value2, true) : value2,
+        };
+        return [...acc, obj];
       }
 
       if (Object.hasOwn(tree1, key)) {
         const obj = {
           name: key,
           type: _.isObject(value1) ? 'nested' : 'leaf',
-          status: 'deleted',
+          status: hasParents ? 'unchanged' : 'deleted',
           value: _.isObject(value1) ? createAST(value1, {}, true) : value1,
         };
-        if (hasParents === true) {
-          obj.status = 'unchanged';
-        }
-        arrayOfObjects.push(obj);
+        return [...acc, obj];
       }
 
       if (Object.hasOwn(tree2, key)) {
         const obj = {
           name: key,
           type: _.isObject(value2) ? 'nested' : 'leaf',
-          status: 'added',
+          status: hasParents ? 'unchanged' : 'added',
           value: _.isObject(value2) ? createAST({}, value2, true) : value2,
         };
-        if (hasParents === true) {
-          obj.status = 'unchanged';
-        }
-        arrayOfObjects.push(obj);
+        return [...acc, obj];
       }
-      return [...acc, ...arrayOfObjects];
+      return [...acc];
     };
 
     const result = sortedKeys.reduce(cb, []);
