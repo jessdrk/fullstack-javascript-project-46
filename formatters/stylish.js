@@ -28,7 +28,7 @@ const stylish = (tree) => {
             return `${replacer}- ${item.name}: {\n${iter(item.oldValue, depth + 1)}${replacer}  }\n${replacer}+ ${item.name}: ${String(item.newValue)}\n`;
           }
           if (item.newType === 'nested') {
-            return `${replacer}- ${item.name}: ${String(item.oldValue)}\n${replacer}+ ${item.name}: {\n${iter(item.newValue, depth + 1)}${replacer}}`;
+            return `${replacer}- ${item.name}: ${String(item.oldValue)}\n${replacer}+ ${item.name}: {\n${iter(item.newValue, depth + 1)}${replacer}}\n`;
           }
           return `${replacer}- ${item.name}: ${String(item.oldValue)}\n${replacer}+ ${item.name}: ${String(item.newValue)}\n`;
         }
