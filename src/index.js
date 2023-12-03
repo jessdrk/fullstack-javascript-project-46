@@ -4,18 +4,23 @@ import _ from 'lodash';
 import parsingData from './parsers.js';
 import chooseFormat from '../formatters/index.js';
 
-const getPath = (filepath) => {
-  const currentPath = process.cwd();
-  if (path.isAbsolute(filepath)) {
-    return `${currentPath}${filepath}`;
-  }
-  return path.resolve(currentPath, filepath);
+// const getPath = (filepath) => {
+//   const currentPath = process.cwd();
+//   if (path.isAbsolute(filepath)) {
+//     return `${currentPath}${filepath}`;
+//   }
+//   return path.resolve(currentPath, filepath);
+// };
+
+const readFile = (filepath) => {
+  const read = fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf-8');
+  return parsingData(read, filepath);
 };
 
-const readFile = (file) => {
-  const read = fs.readFileSync(getPath(file), { encoding: 'utf-8' });
-  return parsingData(read, file);
-};
+// const readFile = (file) => {
+//   const read = fs.readFileSync(getPath(file), { encoding: 'utf-8' });
+//   return parsingData(read, file);
+// };
 
 const generateDifference = (filepath1, filepath2, format = 'stylish') => {
   const obj1 = readFile(filepath1);
