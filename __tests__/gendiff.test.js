@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-import generateDifference from '../src/genDiff.js';
+import generateDifference from '../src/index.js';
 
 test('stylish', () => {
   const result = `{
