@@ -1,11 +1,11 @@
 import path from 'path';
-import { load } from 'js-yaml';
+import yaml from 'js-yaml';
 
 const parsingData = (data, file) => {
   if (path.extname(file) === '.json') {
     return JSON.parse(data);
   }
-  return load(data);
+  return yaml.load(data);
 };
 
 export default parsingData;
