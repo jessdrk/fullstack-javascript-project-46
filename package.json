@@ -7,7 +7,7 @@
     "test": "npx jest"
   },
   "author": "Anastasiia",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
