@@ -32,10 +32,8 @@ const stylish = (tree) => {
         }
         return '';
       })();
-
       return `${acc}${newAcc}`;
     }, '');
-
     return result;
   };
 
