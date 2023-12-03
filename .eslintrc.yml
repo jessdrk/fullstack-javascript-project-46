@@ -21,5 +21,3 @@ rules:
     - ignorePackages
     - js: always
   no-underscore-dangle: [2, { "allow": ["__filename", "__dirname"] }]
-  indent: 'off'
-  no-tabs: 'off'

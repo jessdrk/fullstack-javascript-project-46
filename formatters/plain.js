@@ -1,18 +1,18 @@
 import _ from 'lodash';
 
 const defineType = (value) => {
-	if (_.isObject(value)) {
-		return '[complex value]';
-	} if (typeof value === 'string') {
-		return `'${value}'`;
-	}
-	return value;
+  if (_.isObject(value)) {
+    return '[complex value]';
+  } if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  return value;
 };
 
 const writeSituation = (happening, property, value1, value2) => {
   switch (happening) {
     case 'added': {
-			const newValue = defineType(value1);
+      const newValue = defineType(value1);
       return `Property '${property}' was added with value: ${newValue}`;
     }
     case 'removed': {
@@ -28,28 +28,28 @@ const writeSituation = (happening, property, value1, value2) => {
 };
 
 const plain = (node) => {
-	const iter = (tree, parent) => {
-		const cb = (acc, item) => {
-			const fullname = parent ? `${parent}.${item.name}` : item.name;
-			if (item.status === 'unchanged' && Array.isArray(item.children)) {
-				return `${acc}${iter(item.children, fullname)}`;
-			}
-			if (item.status === 'deleted') {
-				return `${acc}${writeSituation('removed', fullname)}\n`;
-			}
-			if (item.status === 'added') {
-				const newValue = typeof item.value === 'string' ? String(item.value) : item.value;
-				return `${acc}${writeSituation('added', fullname, newValue)}\n`;
-			}
-			if (item.status === 'changed') {
-				return `${acc}${writeSituation('updated', fullname, item.oldValue, item.newValue)}\n`;
-			}
-			return acc;
-		};
-		const result = tree.reduce(cb, '');
-		return result;
-	};
-	return iter(node).trim();
+  const iter = (tree, parent) => {
+    const cb = (acc, item) => {
+      const fullname = parent ? `${parent}.${item.name}` : item.name;
+      if (item.status === 'unchanged' && Array.isArray(item.children)) {
+        return `${acc}${iter(item.children, fullname)}`;
+      }
+      if (item.status === 'deleted') {
+        return `${acc}${writeSituation('removed', fullname)}\n`;
+      }
+      if (item.status === 'added') {
+        const newValue = typeof item.value === 'string' ? String(item.value) : item.value;
+        return `${acc}${writeSituation('added', fullname, newValue)}\n`;
+      }
+      if (item.status === 'changed') {
+        return `${acc}${writeSituation('updated', fullname, item.oldValue, item.newValue)}\n`;
+      }
+      return acc;
+    };
+    const result = tree.reduce(cb, '');
+    return result;
+  };
+  return iter(node).trim();
 };
 
 export default plain;
