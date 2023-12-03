@@ -1,6 +1,11 @@
 const stylish = (tree) => {
   const iter = (node, depth) => {
     const replacer = ' '.repeat(4 * depth - 2);
+    // Проверяю сработает ли условие в автотестах
+    if (!Array.isArray(node)) {
+      return `Ошибка в этом месте  ${node.name}: ${node.value}\n`;
+    }
+
     const result = node.reduce((acc, item) => {
       const newAcc = (() => {
         if (Object.hasOwn(item, 'children')) {
