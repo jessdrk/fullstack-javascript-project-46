@@ -3,7 +3,7 @@ const stylish = (tree) => {
     const replacer = ' '.repeat(4 * depth - 2);
     // Проверяю сработает ли условие в автотестах
     if (!Array.isArray(node)) {
-      return `Ошибка в этом месте  ${node.name}: ${node.value}\n`;
+      return `Ошибка в этом месте node: ${node} \n`;
     }
 
     const result = node.reduce((acc, item) => {
