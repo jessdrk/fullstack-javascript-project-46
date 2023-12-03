@@ -27,7 +27,7 @@ const stylish = (tree) => {
           if (item.oldType === 'nested' || item.newType === 'nested') {
             return `${replacer}- ${item.name}: {\n${iter(item.oldValue, depth + 1)}${replacer}  }\n${replacer}+ ${item.name}: ${item.newValue}\n`;
           }
-          return `${replacer}- ${item.name}: ${item.oldValue}\n${replacer}+ ${item.name}: ${item.newValue}\n`;
+          return `${replacer}- ${item.name}: ${String(item.oldValue)}\n${replacer}+ ${item.name}: ${String(item.newValue)}\n`;
         }
         if (item.status === 'unchanged') {
           if (item.type === 'nested') {
