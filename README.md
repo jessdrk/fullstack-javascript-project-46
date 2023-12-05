@@ -28,8 +28,8 @@ Options:
 
 
 ### Вычислитель отличий / Difference calculator
-###### Вычислитель отличий – программа, определяющая разницу между двумя структурами данных. Утилита имеет возможность поддерживать разные входные форматы: **yaml**, **json** и генерировать отчеты в виде **plain** text, **stylish** и **json**.
-###### A difference calculator is a program that determines the difference between two data structures. The utility has the ability to support different input formats: **yaml**, **json** and generate reports in the form of **plain** text, **stylish** and **json**.
+###### Вычислитель отличий – программа, определяющая разницу между двумя структурами данных. Утилита имеет возможность поддерживать разные входные форматы: <u>yaml</u>, <u>json</u> и генерировать отчеты в виде <u>plain</u> text, <u>stylish</u> и <u>json</u>.
+###### A difference calculator is a program that determines the difference between two data structures. The utility has the ability to support different input formats: <u>yaml</u>, <u>json</u> and generate reports in the form of <u>plain</u> text, <u>stylish</u> and <u>json</u>.
 
 ### Example difference calculator (json files)
 ```bash
