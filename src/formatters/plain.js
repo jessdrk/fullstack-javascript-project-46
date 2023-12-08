@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const defineType = (value) => {
+const defineFormattedValue = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   } if (typeof value === 'string') {
@@ -12,15 +12,15 @@ const defineType = (value) => {
 const writeSituation = (happening, property, value1, value2) => {
   switch (happening) {
     case 'added': {
-      const newValue = defineType(value1);
+      const newValue = defineFormattedValue(value1);
       return `Property '${property}' was added with value: ${newValue}`;
     }
     case 'removed': {
       return `Property '${property}' was removed`;
     }
     case 'updated': {
-      const newValue1 = defineType(value1);
-      const newValue2 = defineType(value2);
+      const newValue1 = defineFormattedValue(value1);
+      const newValue2 = defineFormattedValue(value2);
       return `Property '${property}' was updated. From ${newValue1} to ${newValue2}`;
     }
     default: throw new Error(`Invalid happening: ${happening}`);
