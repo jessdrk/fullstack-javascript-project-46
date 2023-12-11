@@ -19,28 +19,6 @@ const stylish = (tree) => {
         if (item.status === 'added') {
           return _.isObject(item.value) ? `${replacer}+ ${item.name}: {\n${iter(item.value, depth + 1)}${replacer}  }\n` : `${replacer}+ ${item.name}: ${String(item.value)}\n`;
         }
-        /* Не могу придумать как можно в блоке 'changed' убрать вложенные ифы.
-        Только если в отдельную функцию вынести.
-        Так как кодклимат ругался на дубликацию кода у 'changed', 'deleted' и 'added',
-        я подумала сделать вот так:
-        (пришлось код перенести по строкам потому что линтер ругается на длину строки)
-
-        if (item.status === 'deleted' || item.status === 'changed') {
-          const currentValue = item.value || item.oldValue;
-          return _.isObject(currentValue) ?
-          `${replacer}- ${item.name}: {\n${iter(currentValue, depth + 1)}${replacer}  }\n` :
-          `${replacer}- ${item.name}: ${String(currentValue)}\n`;
-        }
-        if (item.status === 'added' || item.status === 'changed') {
-          const currentValue = item.value || item.newValue;
-          return _.isObject(currentValue) ?
-          `${replacer}+ ${item.name}: {\n${iter(currentValue, depth + 1)}${replacer}  }\n` :
-          `${replacer}+ ${item.name}: ${String(currentValue)}\n`;
-        }
-
-        Но это не сработало, так как после первого ифа возвращалось значение и функция не шла
-        ко второму ифу.
-        */
         if (item.status === 'changed') {
           if (_.isObject(item.oldValue)) {
             return `${replacer}- ${item.name}: {\n${iter(item.oldValue, depth + 1)}${replacer}  }\n${replacer}+ ${item.name}: ${String(item.newValue)}\n`;
