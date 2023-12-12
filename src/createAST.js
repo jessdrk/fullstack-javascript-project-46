@@ -28,7 +28,7 @@ const createAST = (tree1, tree2, hasParents = false) => {
     if (_.isObject(value1) && _.isObject(value2)) {
       const obj = {
         name: key,
-        status: 'unchanged',
+        status: 'nested',
         children: createAST(value1, value2),
       };
       return [...acc, obj];

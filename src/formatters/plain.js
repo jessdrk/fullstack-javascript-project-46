@@ -31,7 +31,7 @@ const plain = (node) => {
   const iter = (tree, parent) => {
     const cb = (acc, item) => {
       const fullname = parent ? `${parent}.${item.name}` : item.name;
-      if (item.status === 'unchanged' && Array.isArray(item.children)) {
+      if (item.status === 'nested') {
         return `${acc}${iter(item.children, fullname)}`;
       }
       if (item.status === 'deleted') {
