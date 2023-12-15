@@ -9,24 +9,6 @@ const defineFormattedValue = (value) => {
   return value;
 };
 
-const writeSituation = (happening, property, value1, value2) => {
-  switch (happening) {
-    case 'added': {
-      const newValue = defineFormattedValue(value1);
-      return `Property '${property}' was added with value: ${newValue}`;
-    }
-    case 'removed': {
-      return `Property '${property}' was removed`;
-    }
-    case 'updated': {
-      const newValue1 = defineFormattedValue(value1);
-      const newValue2 = defineFormattedValue(value2);
-      return `Property '${property}' was updated. From ${newValue1} to ${newValue2}`;
-    }
-    default: throw new Error(`Invalid happening: ${happening}`);
-  }
-};
-
 const plain = (node) => {
   const iter = (tree, parent) => {
     const cb = (acc, item) => {
@@ -35,14 +17,16 @@ const plain = (node) => {
         return `${acc}${iter(item.children, fullname)}`;
       }
       if (item.status === 'deleted') {
-        return `${acc}${writeSituation('removed', fullname)}\n`;
+        return `${acc}Property '${fullname}' was removed\n`;
       }
       if (item.status === 'added') {
-        const newValue = typeof item.value === 'string' ? String(item.value) : item.value;
-        return `${acc}${writeSituation('added', fullname, newValue)}\n`;
+        const newValue = defineFormattedValue(item.value);
+        return `${acc}Property '${fullname}' was added with value: ${newValue}\n`;
       }
       if (item.status === 'changed') {
-        return `${acc}${writeSituation('updated', fullname, item.oldValue, item.newValue)}\n`;
+        const newValue1 = defineFormattedValue(item.oldValue);
+        const newValue2 = defineFormattedValue(item.newValue);
+        return `${acc}Property '${fullname}' was updated. From ${newValue1} to ${newValue2}\n`;
       }
       return acc;
     };

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const createAST = (tree1, tree2, hasParents = false) => {
+const createAST = (tree1, tree2) => {
   const keys1 = Object.keys(tree1);
   const keys2 = Object.keys(tree2);
   const generalKeys = _.union(keys1, keys2);
@@ -12,16 +12,16 @@ const createAST = (tree1, tree2, hasParents = false) => {
     if (!Object.hasOwn(tree1, key)) {
       const obj = {
         name: key,
-        status: hasParents ? 'unchanged' : 'added',
-        value: _.isObject(value2) ? createAST({}, value2, true) : value2,
+        status: 'added',
+        value: value2,
       };
       return [...acc, obj];
     }
     if (!Object.hasOwn(tree2, key)) {
       const obj = {
         name: key,
-        status: hasParents ? 'unchanged' : 'deleted',
-        value: _.isObject(value1) ? createAST(value1, {}, true) : value1,
+        status: 'deleted',
+        value: value1,
       };
       return [...acc, obj];
     }
@@ -36,9 +36,9 @@ const createAST = (tree1, tree2, hasParents = false) => {
     if (value1 !== value2) {
       const obj = {
         name: key,
-        status: hasParents ? 'unchanged' : 'changed',
-        oldValue: _.isObject(value1) ? createAST(value1, {}, true) : value1,
-        newValue: _.isObject(value2) ? createAST({}, value2, true) : value2,
+        status: 'changed',
+        oldValue: value1,
+        newValue: value2,
       };
       return [...acc, obj];
     }

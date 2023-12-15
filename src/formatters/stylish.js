@@ -5,10 +5,11 @@ const formateValueToString = (value, depth) => {
     return String(value);
   }
   const replacer = ' '.repeat(4 * depth);
-  const result = value.map((item) => {
-    const nestedValue = formateValueToString(item.value, depth + 1);
-    return `${replacer}    ${item.name}: ${nestedValue}`;
+  const result = Object.keys(value).map((key) => {
+    const nestedValue = formateValueToString(value[key], depth + 1);
+    return `${replacer}    ${key}: ${nestedValue}`;
   });
+
   return `{\n${result.join('\n')}\n${replacer}}`;
 };
 
@@ -25,6 +26,10 @@ const stylish = (tree) => {
       if (item.status === 'added') {
         return `${replacer}+ ${item.name}: ${formateValueToString(item.value, depth)}`;
       }
+      // Вы написали к этому месту замечание: "При такой структуре, в форматерах надо
+      // поправить статус changed. Чтобы как раз oldValue и newValue работало."
+      // Я не поняла про что вы, я сделала другие правки и все работает.
+      // Тут не знаю что менять можно
       if (item.status === 'changed') {
         return `${replacer}- ${item.name}: ${formateValueToString(item.oldValue, depth)}\n${replacer}+ ${item.name}: ${formateValueToString(item.newValue, depth)}`;
       }
